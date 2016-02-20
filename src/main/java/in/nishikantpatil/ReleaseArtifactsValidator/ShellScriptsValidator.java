@@ -9,8 +9,8 @@ import java.util.regex.Pattern;
  * Implementation for shell scripts validator
  */
 public class ShellScriptsValidator extends ReleaseArtifactsValidator {
-    private Pattern jarPathVarPattern = Pattern.compile("^jar_path");
-    private Pattern jarPathPattern = Pattern.compile("~/\\$env/jars/?");
+    private Pattern jarPathVarPattern = Pattern.compile("^jar_path", Pattern.CASE_INSENSITIVE);
+    private Pattern jarPathPattern = Pattern.compile("~/\\$env/jars/?", Pattern.CASE_INSENSITIVE);
 
     @Override
     public boolean isInValidLine(String line) {

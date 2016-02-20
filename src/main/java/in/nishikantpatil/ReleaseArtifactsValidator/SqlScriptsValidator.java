@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
  * Implementation for sql scripts validator
  */
 public class SqlScriptsValidator extends ReleaseArtifactsValidator {
-    Pattern commitPattern = Pattern.compile("(?)commit");
+    Pattern commitPattern = Pattern.compile("commit", Pattern.CASE_INSENSITIVE);
 
     @Override
     public boolean isInValidLine(String line) {
