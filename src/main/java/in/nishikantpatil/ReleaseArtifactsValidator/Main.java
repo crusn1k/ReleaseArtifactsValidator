@@ -28,7 +28,7 @@ public class Main {
                 }
                 continue;
             }
-            validate(new ShellScriptsValidator(), file.getAbsolutePath());
+            validate(validator, file.getAbsolutePath());
         }
     }
 
@@ -39,7 +39,7 @@ public class Main {
         if ("shell".equals(fileType)) {
             validate(new ShellScriptsValidator(), dirPath);
         } else {
-            //validate(new ShellScriptsValidator(), dirPath);
+            validate(new SqlScriptsValidator(), dirPath);
         }
         System.out.println(fileResults);
     }
