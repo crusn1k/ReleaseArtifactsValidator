@@ -1,0 +1,2 @@
+# ReleaseArtifactsValidator
+WYSISWYG
