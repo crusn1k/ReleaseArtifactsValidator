@@ -16,7 +16,7 @@ public abstract class ReleaseArtifactsValidator {
 
     public List<String> isValid(File file, String extension) throws InvalidFileException, FileNotFoundException {
         if (null == file || !file.getName().toLowerCase().endsWith(extension)) {
-            throw new InvalidFileException(file + " is not a valid shell script.");
+            throw new InvalidFileException(file + " is not a valid script.");
         }
 
         List<String> invalidLines = new ArrayList<>();
@@ -24,7 +24,7 @@ public abstract class ReleaseArtifactsValidator {
             while (scanner.hasNext()) {
                 String line = scanner.nextLine();
                 if (isInValidLine(line)) {
-                    invalidLines.add(line);
+                    invalidLines.add("File + " + file.getName() + " has invalid keywords: " + line);
                 }
             }
         }

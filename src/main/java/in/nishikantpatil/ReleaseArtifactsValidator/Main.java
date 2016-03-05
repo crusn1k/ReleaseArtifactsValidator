@@ -2,7 +2,6 @@ package in.nishikantpatil.ReleaseArtifactsValidator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +22,7 @@ public class Main {
             if (!file.isDirectory()) {
                 try {
                     fileResults.put(file.getAbsolutePath(), validator.isValid(file));
-                } catch (InvalidFileException | FileNotFoundException e){
+                } catch (InvalidFileException | FileNotFoundException e) {
                     e.printStackTrace();
                 }
                 continue;
@@ -41,6 +40,13 @@ public class Main {
         } else {
             validate(new SqlScriptsValidator(), dirPath);
         }
-        System.out.println(fileResults);
+        for (Map.Entry<String, List<String>> entry : fileResults.entrySet()) {
+            if (!entry.getValue().isEmpty()) {
+                System.out.println(entry.getKey() + " has the following errors.");
+                for (String invalidLine : entry.getValue()) {
+                    System.out.println("\t\t" + invalidLine);
+                }
+            }
+        }
     }
 }
