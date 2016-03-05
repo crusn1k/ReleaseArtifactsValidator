@@ -24,7 +24,7 @@ public abstract class ReleaseArtifactsValidator {
             while (scanner.hasNext()) {
                 String line = scanner.nextLine();
                 if (isInValidLine(line)) {
-                    invalidLines.add("File + " + file.getName() + " has invalid keywords: " + line);
+                    invalidLines.add("File " + file.getName() + " has invalid keywords: " + line);
                 }
             }
         }
