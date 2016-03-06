@@ -2,33 +2,35 @@ package in.nishikantpatil.ReleaseArtifactsValidator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * Launcher for the validators.
  */
 public class Main {
 
-    private static Map<String, List<String>> fileResults = new HashMap<>();
+    private static ConcurrentMap<String, List<String>> fileResults = new ConcurrentHashMap<>();
 
     private static void validate(ReleaseArtifactsValidator validator, String dirPath) {
         File scriptsDir = new File(dirPath);
         if (!scriptsDir.isDirectory() || null == scriptsDir.listFiles()) {
             throw new IllegalArgumentException(dirPath + " is not a directory.");
         }
-        for (File file : scriptsDir.listFiles()) {
+        Arrays.stream(scriptsDir.listFiles()).parallel().forEach((file -> {
             if (!file.isDirectory()) {
                 try {
                     fileResults.put(file.getAbsolutePath(), validator.isValid(file));
                 } catch (InvalidFileException | FileNotFoundException e) {
                     e.printStackTrace();
                 }
-                continue;
+            } else {
+                validate(validator, file.getAbsolutePath());
             }
-            validate(validator, file.getAbsolutePath());
-        }
+        }));
     }
 
     public static void main(String... args) {

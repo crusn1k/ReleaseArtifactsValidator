@@ -12,17 +12,17 @@ import java.util.Scanner;
  */
 public abstract class ReleaseArtifactsValidator {
 
-    protected List<String> lines = new ArrayList<>();
+    protected ThreadLocal<List<String>> lines = new ThreadLocal<>();
 
     public abstract boolean isInValidLine(String line);
 
     protected void init(File file) throws FileNotFoundException {
-        lines = new ArrayList<>();
+        lines.set(new ArrayList<>());
         try (Scanner scanner = new Scanner(new FileInputStream(file))) {
             while (scanner.hasNext()) {
                 String line = scanner.nextLine();
                 if (!"".equals(line.trim())) {
-                    lines.add(line);
+                    lines.get().add(line);
                 }
             }
         }
@@ -35,11 +35,13 @@ public abstract class ReleaseArtifactsValidator {
         }
         init(file);
         List<String> invalidLines = new ArrayList<>();
-        for (String line : lines) {
+        lines.get().parallelStream().forEach((line) -> {
             if (isInValidLine(line)) {
                 invalidLines.add("File " + file.getName() + " has invalid keywords: " + line);
             }
-        }
+        });
+
+
 
         return invalidLines;
     }

@@ -37,7 +37,7 @@ public class SqlScriptsValidator extends ReleaseArtifactsValidator {
         boolean declareFound = false;
         boolean endFound = false;
         boolean semiColonFound = false;
-        for (String line : lines) {
+        for (String line : lines.get()) {
             if ("".equals(line.trim())) {
                 continue;
             }
@@ -70,7 +70,7 @@ public class SqlScriptsValidator extends ReleaseArtifactsValidator {
         List<String> invalidLines = new ArrayList<>();
         boolean ddlFound = false;
         boolean dmlFound = false;
-        for (String line : lines) {
+        for (String line : lines.get()) {
             if ("".equals(line.trim())) {
                 continue;
             }
@@ -95,7 +95,7 @@ public class SqlScriptsValidator extends ReleaseArtifactsValidator {
         String objectCreated = "";
         boolean createFound = false;
         boolean endFound = false;
-        for (String line : lines) {
+        for (String line : lines.get()) {
             if ("".equals(line.trim())) {
                 continue;
             }
